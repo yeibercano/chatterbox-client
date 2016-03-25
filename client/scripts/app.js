@@ -1,6 +1,14 @@
+//message info that will be sent to server
+var message = {
+  username: 'shawndrost',
+  text: 'trololo',
+  roomname: '4chan'
+};
+
+
 var app = {
-  init: function(){},
-  send: function(){
+  init: function(){}, //function to initialize app
+  send: function(message){ //function for message send that initializes post request
     $.ajax({
   // This is the url you should use to communicate with the parse API server.
   url: 'https://api.parse.com/1/classes/chatterbox',
@@ -20,10 +28,5 @@ var app = {
 
 };
 
-var message = {
-  username: 'shawndrost',
-  text: 'trololo',
-  roomname: '4chan'
-};
 
 
