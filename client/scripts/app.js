@@ -6,25 +6,28 @@ var message = {
 };
 
 
-
-
 var app = {
   init: function(){
     $(document).ready(function(){
       console.log( "ready!" );
+      $('#send').on('click', 'btn-submit',function(){
+        console.log('submit clicked')
+        app.send();
+      });
     });
+
     app.send();
     app.fetch();
 
   }, //function to initialize app
   
   send: function(message){ //function for message send that initializes post request
-    // var escapeMessage = _.escape(message);  //ask help desk
+    var escapeMessage = _.escape(message);  //ask help desk
     $.ajax({
     // This is the url you should use to communicate with the parse API server.
     url: 'https://api.parse.com/1/classes/chatterbox',
     type: 'POST',
-    data: JSON.stringify(message),
+    data: JSON.stringify(escapeMessage),
     contentType: 'application/json',
     success: function (data) {
       console.log('chatterbox: Message sent');
@@ -44,6 +47,7 @@ var app = {
     data: JSON.stringify(message),
     contentType: 'application/json',
     success: function (data) {
+      app.addMessage(data);
       console.log('chatterbox: Data received');
     },
     error: function (data) {
@@ -71,7 +75,6 @@ var app = {
   addRoom: function(message){
     $('<p>' + message.room + '</>').appendTo('#roomSelect')
   },
-
 
   addFriend: function(username){
     console.log('call2')
