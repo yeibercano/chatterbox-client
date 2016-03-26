@@ -6,6 +6,7 @@ var message = {
 };
 
 
+var escapedMessage = _.escape(message); 
 var app = {
   init: function(){
     $(document).ready(function(){
@@ -21,18 +22,26 @@ var app = {
 
   }, //function to initialize app
   
-  send: function(message){ //function for message send that initializes post request
-    var escapeMessage = _.escape(message);  //ask help desk
+  server: 'https://api.parse.com/1/classes/chatterbox',
+  
+  send: function(escapedMessage){ //function for message send that initializes post request
+     //ask help desk
     $.ajax({
     // This is the url you should use to communicate with the parse API server.
     url: 'https://api.parse.com/1/classes/chatterbox',
     type: 'POST',
-    data: JSON.stringify(escapeMessage),
+    data: JSON.stringify(escapedMessage),
     contentType: 'application/json',
-    success: function (data) {
+    
+    success: function (escapedMessage) {
+      if(escapedMessage){
+
+        app.addMessage(escapedMessage);
+        app.addRoom(escapedMessage)
+      };
       console.log('chatterbox: Message sent');
     },
-    error: function (data) {
+    error: function (escapedMessage) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
       console.error('chatterbox: Failed to send message');
     }
@@ -42,13 +51,16 @@ var app = {
   fetch: function(){
     $.ajax({
     // This is the url you should use to communicate with the parse API server.
-    // url: 'https://api.parse.com/1/classes/chatterbox',
+    url: app.server ,
     type: 'GET',
-    data: JSON.stringify(message),
+    // data: JSON.stringify(message),
+    // console.log('message:', message);
     contentType: 'application/json',
     success: function (data) {
-      app.addMessage(data);
-      console.log('chatterbox: Data received');
+      // console.log(data)
+      // data = JSON.parse(data)
+      // app.addMessage(data);
+      // console.log('chatterbox: Data received');
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
