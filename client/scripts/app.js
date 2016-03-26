@@ -11,6 +11,7 @@ var app = {
     $(document).ready(function(){
       console.log( "ready!" );
     });
+
   }, //function to initialize app
   
   send: function(message){ //function for message send that initializes post request
@@ -56,7 +57,23 @@ var app = {
 
   addMessage: function(message){
     //iterate through the message object
-   $('<div> <p>' + this.username + '</p> <p>' + this.text + '</p> </div>' ).appendTo('#chats');
+   $('<div> <p><a href="#" class="username">' + message.username + '</a></p> <p>' + message.text + '</p> </div>' ).appendTo('#chats');
+  },
+
+  addRoom: function(message){
+    $('<p>' + message.room + '</>').appendTo('#roomSelect')
+  },
+
+  clickAddFriend: function(){     
+    $(document).on('click', '.username', function(event){
+      event.preventDefault();
+      app.addFriend();
+    })
+  },
+
+  addFriend: function(username){
+    console.log('call2')
+    // message.username
   }
 
 };
