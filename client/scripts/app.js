@@ -6,11 +6,15 @@ var message = {
 };
 
 
+
+
 var app = {
   init: function(){
     $(document).ready(function(){
       console.log( "ready!" );
     });
+    app.send();
+    app.fetch();
 
   }, //function to initialize app
   
@@ -40,11 +44,11 @@ var app = {
     data: JSON.stringify(message),
     contentType: 'application/json',
     success: function (data) {
-      console.log('chatterbox: Message sent');
+      console.log('chatterbox: Data received');
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-      console.error('chatterbox: Failed to send message');
+      console.error('chatterbox: Failed to receive data');
     }
     }); 
   },
@@ -58,18 +62,16 @@ var app = {
   addMessage: function(message){
     //iterate through the message object
    $('<div> <p><a href="#" class="username">' + message.username + '</a></p> <p>' + message.text + '</p> </div>' ).appendTo('#chats');
+    $(document).on('click', '.username', function(event){
+      event.preventDefault();
+      app.addFriend();
+    });
   },
 
   addRoom: function(message){
     $('<p>' + message.room + '</>').appendTo('#roomSelect')
   },
 
-  clickAddFriend: function(){     
-    $(document).on('click', '.username', function(event){
-      event.preventDefault();
-      app.addFriend();
-    })
-  },
 
   addFriend: function(username){
     console.log('call2')
@@ -77,6 +79,9 @@ var app = {
   }
 
 };
+
+
+
 app.init();
 
 
