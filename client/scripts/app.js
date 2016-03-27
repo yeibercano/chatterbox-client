@@ -6,23 +6,42 @@ var message = {
 };
 
 
-var escapedMessage = _.escape(message); 
+
+      //   event.preventDefault();
+      //   console.log('submit clicked')
+      //   var $value = $('.btn-submit').val();
+      //   console.log('value submitted by user,', $value);
+      //   app.send($value);
+      // });
+
+// var escapedMessage = _.escape(message); 
+
 var app = {
+  server: 'https://api.parse.com/1/classes/chatterbox',
+  username: "anonymous",
+  lastMessageId: 0,
+
+
   init: function(){
-    $(document).ready(function(){
-      console.log( "ready!" );
-      $('#send').on('click', 'btn-submit',function(){
-        console.log('submit clicked')
-        app.send();
-      });
-    });
-
-    app.send();
+    app.username = window.location.search.substr(10);//what does this syntax mean?
+    app.onscreenMessages = {};
+    app.$text = $('#message');
     app.fetch();
-
+    setInterval(app.fetch.bind(app), 2000);
+    $('#send').on('.submit', app.submitHandler);
   }, //function to initialize app
   
-  server: 'https://api.parse.com/1/classes/chatterbox',
+
+  submitHandler: function(event){
+    event.preventDefault();
+      var message = {
+        username: app.username,
+        text: app.$text.val()
+      }
+    app.$text.val('');
+    app.send(message);
+  },
+
   
   send: function(escapedMessage){ //function for message send that initializes post request
      //ask help desk
@@ -97,6 +116,6 @@ var app = {
 
 
 
-app.init();
+
 
 

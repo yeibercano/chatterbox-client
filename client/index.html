@@ -12,12 +12,20 @@
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
+    <script> 
+    $(function(){
+      app.init()
+    });
+    </script>
   </head>
   <body>
     <div id="main">
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
-      <input type="text" id="send"><button class='btn-submit'>Send Message</button></input>
+      <form action="#" id ="send" method="post">
+        <input type="text" name="message" id="message"/>
+        <input type="submit" name="submit" class="submit"/>
+      </form>
       <form id='roomSelect'></form> 
     </div>
     <div id="chats"> 
